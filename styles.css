@@ -8,11 +8,16 @@ body {
     background-color: #1a1a1a;
     color: #fff;
     font-family: Arial, sans-serif;
+    text-align: center;  /* Для выравнивания текста по центру */
 }
 
 /* Контейнер для игры */
 .game-container {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Выравнивание по центру */
     width: 100%;
     max-width: 400px;
 }
@@ -94,8 +99,9 @@ body {
     cursor: pointer;
     border-radius: 8px;
     display: block;
-    margin: 0 auto;
+    margin-top: 20px; /* Отступ сверху */
     width: 100%;
+    max-width: 300px;  /* Ограничиваем максимальную ширину кнопки */
 }
 
 .start-button:hover, .mine-control button:hover {
