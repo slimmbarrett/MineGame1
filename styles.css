@@ -59,6 +59,7 @@ body {
     justify-content: center;
     gap: 10px;
     margin-bottom: 10px;
+    align-items: center; /* Выравнивание по центру */
 }
 
 .mine-control button {
@@ -69,6 +70,13 @@ body {
     padding: 5px 15px;
     cursor: pointer;
     border-radius: 8px;
+}
+
+.signal-text {
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    margin: 0 10px; /* Добавим отступы вокруг текста */
 }
 
 .start-button {
