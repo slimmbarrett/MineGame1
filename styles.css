@@ -72,21 +72,17 @@ body {
     border-radius: 8px;
 }
 
-.signal-text {
-    font-size: 18px;
-    color: #fff;
-    font-weight: bold;
-    margin: 0 10px; /* Добавим отступы вокруг текста */
-}
-
 .start-button {
     background-color: #00bcd4;
     color: #fff;
-    font-size: 24px;
+    font-size: 20px;  /* Уменьшили размер шрифта */
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .start-button:hover, .mine-control button:hover {
