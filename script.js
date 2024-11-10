@@ -1,5 +1,3 @@
-// script.js
-
 let mineCount = 5;
 let mines = [];
 const grid = document.getElementById("grid");
@@ -56,7 +54,7 @@ function revealCell(index, cell) {
         cell.classList.add("mine");
         cell.style.backgroundColor = "#ff5722"; // Цвет фона для мины
         alert("Вы попали на мину!");
-        
+
         // Убираем обработчики на всех ячейках, чтобы остановить игру
         Array.from(grid.children).forEach(c => c.replaceWith(c.cloneNode(true)));
     } else {
@@ -64,7 +62,7 @@ function revealCell(index, cell) {
         cell.style.backgroundColor = "#4CAF50";
         cell.style.color = "#fff";
         cell.classList.add("safe");
-        
+
         // Отключаем повторное нажатие на эту ячейку
         cell.removeEventListener("click", () => revealCell(index, cell));
     }
