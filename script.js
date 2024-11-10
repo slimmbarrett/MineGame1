@@ -1,11 +1,13 @@
+// script.js
+
 let mineCount = 5;
 let mines = [];
 const grid = document.getElementById("grid");
 const mineCountDisplay = document.getElementById("mineCount");
 
-// Создание сетки 5x5
+// Создание сетки
 function createGrid() {
-    grid.innerHTML = '';  // Очищаем текущую сетку
+    grid.innerHTML = '';
     for (let i = 0; i < 25; i++) {
         const cell = document.createElement("div");
         cell.classList.add("cell");
