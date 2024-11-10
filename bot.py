@@ -4,7 +4,7 @@ from telegram.ext import Updater, CommandHandler, CallbackContext
 # Вставьте ваш токен сюда
 BOT_TOKEN = '7537994303:AAG15uJYwAmzVINLchNmzIjZ7So95RdkpdI'
 
-# URL вашего Web App (обновите на реальный URL)
+# URL вашего Web App
 WEB_APP_URL = 'https://mine-game1.vercel.app/'
 
 def start(update: Update, context: CallbackContext) -> None:
