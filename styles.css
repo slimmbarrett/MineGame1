@@ -8,7 +8,7 @@ body {
     background-color: #1a1a1a;
     color: #fff;
     font-family: Arial, sans-serif;
-    text-align: center;  /* Для выравнивания текста по центру */
+    text-align: center;
 }
 
 /* Контейнер для игры */
@@ -17,21 +17,31 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* Выравнивание по центру */
+    align-items: center;
     width: 100%;
     max-width: 400px;
 }
 
-/* Стили для заголовка с изображением */
+/* Стили для заголовка с изображениями */
 .header {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .game-logo {
     max-width: 100%;
     height: auto;
-    max-height: 150px;  /* Ограничиваем максимальный размер изображения */
+    max-height: 150px;
     margin-bottom: 20px;
+}
+
+/* Стиль для дополнительного логотипа */
+.logo-secondary {
+    margin-bottom: 10px;
+    max-height: 100px; /* Ограничиваем высоту второго логотипа */
+    opacity: 0.8; /* Добавляем легкую прозрачность */
 }
 
 /* Надпись By CashGenerator */
@@ -99,9 +109,9 @@ body {
     cursor: pointer;
     border-radius: 8px;
     display: block;
-    margin-top: 20px; /* Отступ сверху */
+    margin-top: 20px;
     width: 100%;
-    max-width: 300px;  /* Ограничиваем максимальную ширину кнопки */
+    max-width: 300px;
 }
 
 .start-button:hover, .mine-control button:hover {
