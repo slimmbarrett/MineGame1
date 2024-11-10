@@ -1,4 +1,4 @@
-/* styles.css */
+/* Общие стили для страницы */
 body {
     display: flex;
     justify-content: center;
@@ -12,6 +12,18 @@ body {
 
 .game-container {
     text-align: center;
+}
+
+/* Стили для заголовка с изображением */
+.header {
+    margin-bottom: 20px;
+}
+
+.game-logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 150px;  /* Ограничиваем максимальный размер изображения */
+    margin-bottom: 20px;
 }
 
 .grid {
