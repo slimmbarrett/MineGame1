@@ -10,8 +10,11 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* Контейнер для игры */
 .game-container {
     text-align: center;
+    width: 100%;
+    max-width: 400px;
 }
 
 /* Стили для заголовка с изображением */
@@ -26,6 +29,15 @@ body {
     margin-bottom: 20px;
 }
 
+/* Надпись By CashGenerator */
+.by-cashgenerator {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffeb3b;
+    margin-bottom: 20px;
+}
+
+/* Сетка 5x5 */
 .grid {
     display: grid;
     grid-template-columns: repeat(5, 50px);
@@ -54,12 +66,12 @@ body {
     transform: scale(1.1);
 }
 
+/* Управление количеством мин */
 .mine-control {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-bottom: 10px;
-    align-items: center; /* Выравнивание по центру */
 }
 
 .mine-control button {
@@ -72,17 +84,18 @@ body {
     border-radius: 8px;
 }
 
+/* Кнопка запуска игры */
 .start-button {
     background-color: #00bcd4;
     color: #fff;
-    font-size: 20px;  /* Уменьшили размер шрифта */
+    font-size: 24px;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .start-button:hover, .mine-control button:hover {
