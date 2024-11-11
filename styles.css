@@ -1,4 +1,4 @@
-/* Общий стиль для тела страницы */
+/* Общие стили для страницы */
 body {
     display: flex;
     justify-content: center;
@@ -10,14 +10,18 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* Градиентный фон для контейнера игры */
+/* Контейнер игры */
 .game-container {
     text-align: center;
-    background: linear-gradient(135deg, #006eff, #00c6ff); /* Градиент от синего к голубому */
+    background-color: #131722;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Логотип игры */
@@ -26,7 +30,7 @@ body {
     margin-bottom: 10px;
 }
 
-/* Текст "By CashGenerator" */
+/* Надпись "By CashGenerator" */
 .by-cashgenerator {
     color: #b0b0b0;
     font-size: 1.2em;
@@ -41,7 +45,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* Стиль для ячеек сетки */
+/* Стили ячеек */
 .cell {
     width: 50px;
     height: 50px;
@@ -56,7 +60,6 @@ body {
     cursor: pointer;
 }
 
-/* Стиль для ячеек с миной */
 .cell.mine {
     background-color: #ff5722; /* Цвет для ячеек с миной */
     color: #fff;
@@ -64,7 +67,6 @@ body {
     transform: scale(1.1);
 }
 
-/* Стиль для безопасных ячеек */
 .cell.safe {
     background-color: #0078d7; /* Более яркий голубой фон для безопасной ячейки */
     color: #ffffff;
@@ -77,7 +79,16 @@ body {
     to { opacity: 1; transform: scale(1); }
 }
 
-/* Градиент для кнопки управления мин */
+/* Контейнер для управления количеством мин */
+.mine-control {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+/* Кнопки управления количеством мин */
 .mine-control button {
     background-color: #333a49;
     color: #ffffff;
@@ -89,41 +100,29 @@ body {
     transition: background-color 0.3s;
 }
 
-/* Эффект при наведении на кнопки управления мин */
 .mine-control button:hover {
     background-color: #444b5e;
 }
 
-/* Обновленный стиль для кнопки "Get Signal" */
+/* Стили кнопки "Get Signal" */
 .start-button {
-    background: linear-gradient(135deg, #006eff, #00c6ff); /* Градиент от синего к голубому */
+    background: linear-gradient(135deg, #006eff, #00b5ff);
     color: #ffffff;
     font-size: 20px;
-    font-weight: bold; /* Сделаем текст жирным */
-    border: 4px solid #006eff; /* Толстый контур для кнопки */
-    padding: 20px 40px; /* Увеличенные отступы для большего эффекта */
+    border: 3px solid #ffffff;
+    padding: 10px 20px;
     cursor: pointer;
-    border-radius: 8px; /* Без круга, теперь с квадратными углами */
-    transition: background-color 0.3s, transform 0.3s ease, border-color 0.3s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.3s;
+    outline: none;
+    margin-top: 20px;
 }
 
-/* Эффект при наведении на кнопку "Get Signal" */
 .start-button:hover {
-    background: linear-gradient(135deg, #0052cc, #0099cc); /* Градиент при наведении */
-    border-color: #0052cc; /* Изменение цвета контура при наведении */
+    background: linear-gradient(135deg, #0052cc, #0099e6);
+    transform: scale(1.05);
 }
 
-/* Иконка в кнопке "Get Signal" */
-.start-button svg {
-    margin-left: 10px; /* Отступ между текстом и иконкой */
-    vertical-align: middle; /* Центрирование иконки относительно текста */
-    transition: transform 0.3s ease; /* Плавное изменение при наведении */
-}
-
-/* Увеличение иконки при наведении на кнопку */
-.start-button:hover svg {
-    transform: scale(1.1); /* Увеличение иконки */
+.start-button:focus {
+    outline: none;
 }
