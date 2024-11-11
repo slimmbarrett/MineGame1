@@ -5,7 +5,7 @@ const mineCountDisplay = document.getElementById("mineCount");
 
 // Создание сетки
 function createGrid() {
-    grid.innerHTML = '';
+    grid.innerHTML = ''; // Очистка сетки
     for (let i = 0; i < 25; i++) {
         const cell = document.createElement("div");
         cell.classList.add("cell");
@@ -32,9 +32,9 @@ function decreaseMines() {
 
 // Запуск игры
 function startGame() {
-    mines = generateMines();
+    createGrid(); // Пересоздание сетки при запуске игры
+    mines = generateMines(); // Генерация позиций мин
     alert("Мины расставлены. Найдите безопасные ячейки!");
-    createGrid();
 }
 
 // Генерация случайных мин
@@ -55,4 +55,17 @@ function revealCell(index, cell) {
         alert("Вы попали на мину!");
 
         // Останавливаем игру, убирая обработчики
-        Array.from(grid.children).forEach(c => c.replaceWith
+        Array.from(grid.children).forEach(c => c.replaceWith(c.cloneNode(true)));
+    } else {
+        cell.textContent = "⭐"; // Безопасная ячейка показывает звезду
+        cell.classList.add("safe");
+
+        // Отключаем повторное нажатие на эту ячейку
+        cell.removeEventListener("click", () => revealCell(index, cell));
+    }
+}
+
+// Инициализация игры при загрузке
+window.onload = () => {
+    createGrid(); // Создание сетки при загрузке
+};
