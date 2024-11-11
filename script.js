@@ -55,7 +55,7 @@ function revealCell(index, cell) {
         cell.style.backgroundColor = "#ff5722"; // Цвет фона для мины
         alert("Вы попали на мину!");
 
-        // Убираем обработчики на всех ячейках, чтобы остановить игру
+        // Останавливаем игру, удаляя обработчики на всех ячейках
         Array.from(grid.children).forEach(c => c.replaceWith(c.cloneNode(true)));
     } else {
         cell.textContent = "⭐"; // Безопасная ячейка показывает звезду
