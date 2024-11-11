@@ -1,40 +1,56 @@
-/* styles.css */
-
+/* Общий стиль для всей страницы */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #0f1b2b; /* Темный фон */
+    background-color: #0d1116;
     color: #ffffff;
     font-family: Arial, sans-serif;
 }
 
+/* Контейнер игры */
 .game-container {
     text-align: center;
-    background-color: #202a3e; /* Темно-синий фон для контейнера */
+    background-color: #131722;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     width: 300px;
 }
 
+/* Логотип игры */
 .header img.game-logo {
     width: 80px;
     margin-bottom: 10px;
 }
 
-.by-cashgenerator, .promo-text {
-    color: #f5310a; /* Ярко-зеленый для текста */
+/* Стиль для текста "By CashGenerator" */
+.by-cashgenerator {
+    color: #ffffff;
     font-size: 1.2em;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background-color: rgba(0, 150, 0, 0.7); /* Зеленый фон */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    display: inline-block;
 }
 
-.promo-text {
+/* Стиль для текста "1WinPromo- CashGen" */
+.by-1winpromo {
+    color: #ffffff;
     font-size: 1em;
+    margin-top: -5px;
+    background-color: rgba(0, 200, 0, 0.7); /* Немного другой зеленый фон */
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    display: inline-block;
 }
 
+/* Сетка 5x5 */
 .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -42,39 +58,43 @@ body {
     margin-bottom: 20px;
 }
 
+/* Ячейки сетки */
 .cell {
     width: 50px;
     height: 50px;
-    background-color: #00c0ff; /* Яркий голубой фон */
+    background-color: #1e3a5f;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    color: #fff; /* Белый цвет для текста */
+    color: #00ccff;
     border-radius: 6px;
     transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
     cursor: pointer;
 }
 
+/* Ячейка с миной */
 .cell.mine {
-    background-color: #ff3e00; /* Ярко-красный для мины */
+    background-color: #ff5722;
     color: #fff;
     font-size: 28px;
     transform: scale(1.1);
 }
 
+/* Безопасная ячейка */
 .cell.safe {
-    background-color: #00b300; /* Яркий зеленый для безопасной ячейки */
+    background-color: #0078d7;
     color: #ffffff;
     animation: fadeInStar 0.5s forwards;
 }
 
-/* Анимация для плавного появления звезды */
+/* Анимация для звезды */
 @keyframes fadeInStar {
     from { opacity: 0; transform: scale(0.5); }
     to { opacity: 1; transform: scale(1); }
 }
 
+/* Управление мин */
 .mine-control {
     display: flex;
     justify-content: center;
@@ -83,8 +103,9 @@ body {
     font-size: 20px;
 }
 
+/* Кнопки управления мин */
 .mine-control button {
-    background-color: #1e293b; /* Темно-серый фон */
+    background-color: #333a49;
     color: #ffffff;
     font-size: 18px;
     border: none;
@@ -95,26 +116,23 @@ body {
 }
 
 .mine-control button:hover {
-    background-color: #2d3a4b; /* Более темный серый при наведении */
+    background-color: #444b5e;
 }
 
+/* Кнопка начала игры */
 .start-button {
-    background: linear-gradient(135deg, #00c0ff, #00b300); /* Градиент с голубого в зеленый */
+    background-color: #006eff;
     color: #ffffff;
     font-size: 20px;
-    border: none;
-    padding: 12px 24px;
+    border: 2px solid #fff; /* Толстый контур */
+    padding: 10px 20px;
     cursor: pointer;
     border-radius: 8px;
-    transition: background 0.3s ease;
-    width: 100%;
+    transition: background-color 0.3s;
+    margin-top: 20px;
 }
 
+/* Эффект на кнопку при наведении */
 .start-button:hover {
-    background: linear-gradient(135deg, #00b300, #00c0ff); /* Перевернутый градиент при наведении */
+    background-color: #0052cc;
 }
-
-.start-button:focus {
-    outline: none;
-}
-
