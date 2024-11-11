@@ -48,8 +48,9 @@ body {
     font-size: 24px;
     color: #00ffcc;
     border-radius: 6px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
     cursor: pointer;
+    opacity: 1;
 }
 
 .cell.mine {
@@ -62,6 +63,14 @@ body {
 .cell.safe {
     background-color: #4CAF50; /* Цвет для безопасной ячейки */
     color: #ffffff;
+    opacity: 0; /* Изначально скрываем безопасную ячейку */
+    animation: revealSafe 0.5s forwards;
+}
+
+/* Анимация для безопасной ячейки */
+@keyframes revealSafe {
+    0% { opacity: 1; background-color: #1a1d2e; }
+    100% { opacity: 0; }
 }
 
 .mine-control {
@@ -93,4 +102,11 @@ body {
     font-size: 20px;
     border: none;
     padding: 10px 20px;
-    cursor:
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.start-button:hover {
+    background-color: #0052cc;
+}
