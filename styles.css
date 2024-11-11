@@ -26,26 +26,14 @@ body {
     margin-bottom: 10px;
 }
 
-/* Стиль для текста "By CashGenerator" */
-.by-cashgenerator {
+/* Стиль для текста "By CashGenerator" и "1WinPromo- CashGen" с одинаковым фоном */
+.by-cashgenerator, .by-1winpromo {
     color: #ffffff;
     font-size: 1.2em;
     margin-bottom: 5px;
     padding: 5px 10px;
-    background-color: rgba(0, 150, 0, 0.7); /* Зеленый фон */
+    background-color: rgba(0, 150, 0, 0.8); /* Один зеленый фон для обоих */
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    display: inline-block;
-}
-
-/* Стиль для текста "1WinPromo- CashGen" */
-.by-1winpromo {
-    color: #ffffff;
-    font-size: 1em;
-    margin-top: -5px;
-    background-color: rgba(0, 150, 0, 0.7)); /* Немного другой зеленый фон */
-    padding: 5px 10px;
-    border-radius: 3px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     display: inline-block;
 }
