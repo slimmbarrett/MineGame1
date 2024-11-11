@@ -43,9 +43,9 @@ body {
     color: #ffffff;
     font-size: 1em;
     margin-top: -5px;
-    background-color: rgba(0, 200, 0, 0.7); /* Немного другой зеленый фон */
+    background-color: rgba(0, 150, 0, 0.7)); /* Немного другой зеленый фон */
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 3px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     display: inline-block;
 }
