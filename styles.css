@@ -60,14 +60,18 @@ body {
     background-color: #ff5722;
     color: #fff;
     font-size: 28px;
-    transform: scale(1.1);
     animation: mineReveal 1s ease-out forwards; /* Анимация для мины */
 }
 
-/* Анимация для появления мины */
 @keyframes mineReveal {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .cell.safe {
