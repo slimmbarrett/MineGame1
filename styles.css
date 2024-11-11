@@ -1,3 +1,4 @@
+/* Общий стиль для тела страницы */
 body {
     display: flex;
     justify-content: center;
@@ -9,26 +10,30 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* Градиентный фон для контейнера игры */
 .game-container {
     text-align: center;
-    background-color: #131722;
+    background: linear-gradient(135deg, #006eff, #00c6ff); /* Градиент от синего к голубому */
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     width: 300px;
 }
 
+/* Логотип игры */
 .header img.game-logo {
     width: 80px;
     margin-bottom: 10px;
 }
 
+/* Текст "By CashGenerator" */
 .by-cashgenerator {
     color: #b0b0b0;
     font-size: 1.2em;
     margin-bottom: 15px;
 }
 
+/* Сетка 5x5 для ячеек */
 .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -36,6 +41,7 @@ body {
     margin-bottom: 20px;
 }
 
+/* Стиль для ячеек сетки */
 .cell {
     width: 50px;
     height: 50px;
@@ -50,6 +56,7 @@ body {
     cursor: pointer;
 }
 
+/* Стиль для ячеек с миной */
 .cell.mine {
     background-color: #ff5722; /* Цвет для ячеек с миной */
     color: #fff;
@@ -57,6 +64,7 @@ body {
     transform: scale(1.1);
 }
 
+/* Стиль для безопасных ячеек */
 .cell.safe {
     background-color: #0078d7; /* Более яркий голубой фон для безопасной ячейки */
     color: #ffffff;
@@ -69,14 +77,7 @@ body {
     to { opacity: 1; transform: scale(1); }
 }
 
-.mine-control {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    font-size: 20px;
-}
-
+/* Градиент для кнопки управления мин */
 .mine-control button {
     background-color: #333a49;
     color: #ffffff;
@@ -88,34 +89,39 @@ body {
     transition: background-color 0.3s;
 }
 
+/* Эффект при наведении на кнопки управления мин */
 .mine-control button:hover {
     background-color: #444b5e;
 }
 
+/* Градиент для кнопки "Играть" */
 .start-button {
-    background-color: #006eff;
+    background: linear-gradient(135deg, #006eff, #00c6ff); /* Градиент от синего к голубому */
     color: #ffffff;
     font-size: 20px;
     border: none;
-    padding: 10px 20px;
+    padding: 20px 40px; /* Увеличенные отступы для большего эффекта */
     cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s;
+    border-radius: 50px; /* Сделать кнопку круглой */
+    transition: background-color 0.3s, transform 0.3s ease; /* Плавные переходы */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* Эффект при наведении на кнопку "Играть" */
+.start-button:hover {
+    background: linear-gradient(135deg, #0052cc, #0099cc); /* Градиент при наведении */
+}
+
+/* Иконка в кнопке "Играть" */
 .start-button svg {
     margin-left: 10px; /* Отступ между текстом и иконкой */
     vertical-align: middle; /* Центрирование иконки относительно текста */
     transition: transform 0.3s ease; /* Плавное изменение при наведении */
 }
 
+/* Увеличение иконки при наведении на кнопку */
 .start-button:hover svg {
-    transform: scale(1.1); /* Увеличение иконки при наведении */
-}
-
-.start-button:hover {
-    background-color: #0052cc;
+    transform: scale(1.1); /* Увеличение иконки */
 }
