@@ -94,27 +94,29 @@ body {
     background-color: #444b5e;
 }
 
-/* Градиент для кнопки "Играть" */
+/* Обновленный стиль для кнопки "Get Signal" */
 .start-button {
     background: linear-gradient(135deg, #006eff, #00c6ff); /* Градиент от синего к голубому */
     color: #ffffff;
     font-size: 20px;
-    border: none;
+    font-weight: bold; /* Сделаем текст жирным */
+    border: 4px solid #006eff; /* Толстый контур для кнопки */
     padding: 20px 40px; /* Увеличенные отступы для большего эффекта */
     cursor: pointer;
-    border-radius: 50px; /* Сделать кнопку круглой */
-    transition: background-color 0.3s, transform 0.3s ease; /* Плавные переходы */
+    border-radius: 8px; /* Без круга, теперь с квадратными углами */
+    transition: background-color 0.3s, transform 0.3s ease, border-color 0.3s;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Эффект при наведении на кнопку "Играть" */
+/* Эффект при наведении на кнопку "Get Signal" */
 .start-button:hover {
     background: linear-gradient(135deg, #0052cc, #0099cc); /* Градиент при наведении */
+    border-color: #0052cc; /* Изменение цвета контура при наведении */
 }
 
-/* Иконка в кнопке "Играть" */
+/* Иконка в кнопке "Get Signal" */
 .start-button svg {
     margin-left: 10px; /* Отступ между текстом и иконкой */
     vertical-align: middle; /* Центрирование иконки относительно текста */
