@@ -30,11 +30,18 @@ body {
     margin-bottom: 10px;
 }
 
-/* Надпись "By CashGenerator" */
+/* Текст "By CashGenerator" */
 .by-cashgenerator {
     color: #b0b0b0;
-    font-size: 1.2em;
-    margin-bottom: 15px;
+    font-size: 1em; /* Уменьшено */
+    margin-bottom: 5px;
+}
+
+/* Новый текст "1WinPromo - CashGen" */
+.by-1winpromo {
+    color: #b0b0b0;
+    font-size: 1em;
+    margin-top: 5px;
 }
 
 /* Сетка 5x5 для ячеек */
@@ -119,6 +126,7 @@ body {
     transition: background-color 0.3s, transform 0.3s;
     outline: none;
     margin-top: 20px;
+    width: 200px; /* Установим фиксированную ширину */
 }
 
 .start-button:hover {
