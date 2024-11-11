@@ -28,8 +28,20 @@
             <button onclick="increaseMines()">+</button>
         </div>
 
-        <!-- Кнопка запуска игры с надписью в ней -->
-        <button class="start-button" onclick="startGame()">Играть</button>
+        <!-- Кнопка запуска игры с надписью в ней и SVG -->
+        <button class="start-button" onclick="startGame()">
+            <span>Играть</span>
+            <!-- Вставка SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 54 54">
+                <defs>
+                    <linearGradient id="Gradient-1" x1="24" y1="0" x2="24" y2="48" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#37b0ce"></stop>
+                        <stop offset="1" stop-color="#01586b"></stop>
+                    </linearGradient>
+                </defs>
+                <circle cx="27" cy="27" r="25" fill="url(#Gradient-1)" />
+            </svg>
+        </button>
     </div>
 
     <script src="script.js"></script>
