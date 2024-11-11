@@ -51,6 +51,7 @@ function generateMines() {
 function revealCell(index, cell) {
     if (mines.includes(index)) {
         // Добавляем анимацию для мины
+        cell.textContent = "💣"
         cell.classList.add("mine");
 
         // Используем setTimeout, чтобы показать текст только после анимации
