@@ -17,36 +17,37 @@ body {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    width: 300px;
 }
 
 .header img.game-logo {
-    width: 100px;
+    width: 80px;
     margin-bottom: 10px;
 }
 
 .by-cashgenerator {
-    color: #00ffcc;
+    color: #b0b0b0;
     font-size: 1.2em;
     margin-bottom: 15px;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(5, 60px);
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     margin-bottom: 20px;
 }
 
 .cell {
-    width: 60px;
-    height: 60px;
-    background-color: #2a2d3c;
+    width: 50px;
+    height: 50px;
+    background-color: #1a1d2e;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
     color: #00ffcc;
-    border-radius: 8px;
+    border-radius: 6px;
     transition: background-color 0.3s ease, transform 0.2s ease;
     cursor: pointer;
 }
@@ -58,17 +59,23 @@ body {
     transform: scale(1.1);
 }
 
+.cell.safe {
+    background-color: #4CAF50; /* Цвет для безопасной ячейки */
+    color: #ffffff;
+}
+
 .mine-control {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-bottom: 10px;
+    font-size: 20px;
 }
 
 .mine-control button {
-    background-color: #444;
-    color: #fff;
-    font-size: 24px;
+    background-color: #333a49;
+    color: #ffffff;
+    font-size: 18px;
     border: none;
     padding: 5px 15px;
     cursor: pointer;
@@ -77,13 +84,13 @@ body {
 }
 
 .mine-control button:hover {
-    background-color: #555;
+    background-color: #444b5e;
 }
 
 .start-button {
-    background-color: #00bcd4;
-    color: #fff;
-    font-size: 24px;
+    background-color: #006eff;
+    color: #ffffff;
+    font-size: 20px;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
@@ -92,5 +99,5 @@ body {
 }
 
 .start-button:hover {
-    background-color: #0277bd;
+    background-color: #0052cc;
 }
