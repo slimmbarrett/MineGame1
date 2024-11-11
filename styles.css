@@ -127,6 +127,7 @@ body {
     outline: none;
     margin-top: 20px;
     width: 200px; /* Установим фиксированную ширину */
+    box-shadow: none; /* Убираем любые дополнительные тени или круги */
 }
 
 .start-button:hover {
