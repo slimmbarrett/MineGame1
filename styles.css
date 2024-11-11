@@ -1,4 +1,4 @@
-/* Стили для страницы */
+/* Общий стиль для страницы */
 body {
     display: flex;
     justify-content: center;
@@ -10,6 +10,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* Контейнер с игрой */
 .game-container {
     text-align: center;
     background-color: #131722;
@@ -19,22 +20,27 @@ body {
     width: 300px;
 }
 
+/* Логотип игры */
 .header img.game-logo {
     width: 80px;
     margin-bottom: 10px;
 }
 
-.by-cashgenerator, .by-1winpromo {
-    color: #00ff00; /* Зеленый цвет текста */
+/* Стиль для текста "By CashGenerator" */
+.by-cashgenerator {
+    color: #00ff00; /* Зеленый цвет */
     font-size: 1.2em;
     margin-bottom: 5px;
 }
 
-.by-1winpromo {
-    margin-top: 5px; /* Отступ между блоками текста */
+/* Стиль для дополнительного текста "1WinPromo - CashGen" */
+.promo-text {
+    color: #00ff00; /* Зеленый цвет */
+    font-size: 1.1em;
+    margin-bottom: 15px;
 }
 
-/* Сетка с ячейками */
+/* Сетка 5x5 */
 .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -42,54 +48,50 @@ body {
     margin-bottom: 20px;
 }
 
+/* Стиль ячеек */
 .cell {
     width: 50px;
     height: 50px;
-    background-color: #1e3a5f;
+    background-color: #1e3a5f; /* Ближе к голубому */
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    color: #00ccff;
+    color: #00ccff; /* Цвет текста звезды */
     border-radius: 6px;
     transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
     cursor: pointer;
-    background-size: cover; /* Делаем фоновое изображение в ячейке */
-    background-position: center;
 }
 
+/* Стиль для ячеек с миной */
 .cell.mine {
-    background-color: #ff5722;
-    background-image: url('https://example.com/path-to-your-mine-image.png'); /* Указываем путь к изображению мины */
-    color: transparent; /* Скрываем текст на мине */
-    font-size: 0; /* Скрываем текст, так как показываем картинку */
-    animation: mineReveal 1s ease-out forwards; /* Анимация для мины */
+    background-color: #ff5722; /* Цвет для ячеек с миной */
+    color: #fff;
+    font-size: 28px;
+    animation: flashMine 0.5s ease-out forwards;
 }
 
-@keyframes mineReveal {
-    0% {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
+/* Стиль для безопасных ячеек */
 .cell.safe {
-    background-color: #0078d7;
+    background-color: #0078d7; /* Более яркий голубой фон для безопасной ячейки */
     color: #ffffff;
     animation: fadeInStar 0.5s forwards;
 }
 
-/* Анимация для появления звезды */
+/* Анимация для плавного появления звезды */
 @keyframes fadeInStar {
     from { opacity: 0; transform: scale(0.5); }
     to { opacity: 1; transform: scale(1); }
 }
 
-/* Стиль для управления количеством мин */
+/* Анимация для мигающей мины */
+@keyframes flashMine {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Управление количеством мин */
 .mine-control {
     display: flex;
     justify-content: center;
@@ -98,6 +100,7 @@ body {
     font-size: 20px;
 }
 
+/* Кнопки управления количеством мин */
 .mine-control button {
     background-color: #333a49;
     color: #ffffff;
@@ -113,17 +116,18 @@ body {
     background-color: #444b5e;
 }
 
-/* Стиль для кнопки "Get Signal" */
+/* Кнопка "Get Signal" */
 .start-button {
     background-color: #006eff;
     color: #ffffff;
     font-size: 20px;
-    border: none;
+    border: 2px solid #ffffff; /* Толстый контур */
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 8px;
     transition: background-color 0.3s;
-    border: 2px solid #006eff; /* Толстый контур */
+    width: 200px; /* Устанавливаем фиксированную ширину */
+    margin: 20px auto; /* Центрируем кнопку */
 }
 
 .start-button:hover {
