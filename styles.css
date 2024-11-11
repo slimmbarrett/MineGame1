@@ -1,5 +1,3 @@
-/* styles.css */
-
 body {
     display: flex;
     justify-content: center;
@@ -103,6 +101,19 @@ body {
     cursor: pointer;
     border-radius: 8px;
     transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-button svg {
+    margin-left: 10px; /* Отступ между текстом и иконкой */
+    vertical-align: middle; /* Центрирование иконки относительно текста */
+    transition: transform 0.3s ease; /* Плавное изменение при наведении */
+}
+
+.start-button:hover svg {
+    transform: scale(1.1); /* Увеличение иконки при наведении */
 }
 
 .start-button:hover {
