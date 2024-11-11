@@ -50,7 +50,7 @@ function generateMines() {
 // Открытие ячейки
 function revealCell(index, cell) {
     if (mines.includes(index)) {
-        // Добавляем анимацию появления мины
+        // Добавляем анимацию для мины
         cell.classList.add("mine");
 
         // Используем setTimeout, чтобы показать текст только после анимации
