@@ -13,7 +13,7 @@ body {
 /* Контейнер игры */
 .game-container {
     text-align: center;
-    background-color: #131722;
+    background: linear-gradient(135deg, #1c2130, #3f4a6b);
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -43,6 +43,9 @@ body {
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     margin-bottom: 20px;
+    background: linear-gradient(135deg, #1c2130, #3f4a6b);
+    border-radius: 10px;
+    padding: 10px;
 }
 
 /* Стили ячеек */
