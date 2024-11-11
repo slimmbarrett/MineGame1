@@ -54,12 +54,15 @@ body {
     border-radius: 6px;
     transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
     cursor: pointer;
+    background-size: cover; /* Делаем фоновое изображение в ячейке */
+    background-position: center;
 }
 
 .cell.mine {
     background-color: #ff5722;
-    color: #fff;
-    font-size: 28px;
+    background-image: url('https://example.com/path-to-your-mine-image.png'); /* Указываем путь к изображению мины */
+    color: transparent; /* Скрываем текст на мине */
+    font-size: 0; /* Скрываем текст, так как показываем картинку */
     animation: mineReveal 1s ease-out forwards; /* Анимация для мины */
 }
 
