@@ -26,14 +26,14 @@ body {
     margin-bottom: 15px;
 }
 
-/* Стиль для текста "By CashGenerator" и "1WinPromo- CashGen" с ярким фоном */
+/* Текст с фоном для "By CashGenerator" и "1Win-CashGen" */
 .by-cashgenerator, .by-1winpromo {
     color: #ffffff;
     font-size: 1.3em;
     margin-bottom: 5px;
-    padding: 8px 15px;
+    padding: 5px 10px; /* Подогнанный размер */
     background-color: #28a745; /* Ярко-зеленый фон */
-    border-radius: 5px;
+    border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     display: inline-block;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Тень текста */
@@ -127,9 +127,4 @@ body {
 /* Эффект на кнопку при наведении */
 .start-button:hover {
     background-color: #e64a19; /* Темно-оранжевый на наведение */
-}
-
-/* Добавление фона за текстами для читаемости */
-.by-cashgenerator, .by-1winpromo {
-    background-color: #4CAF50; /* Ярко-зеленый фон */
 }
