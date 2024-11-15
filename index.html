@@ -6,37 +6,37 @@
     <title>Mine Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="mines">
     <div class="mines__bg">
-        <!-- Заголовок с изображением -->
-        <div class="header">
+        <!-- Заголовок игры -->
+        <header class="game-header">
             <img src="https://zafeminizm.ru/wp-content/uploads/2024/05/1winmines.png" alt="MineGame Logo" class="game-logo">
+        </header>
+
+        <!-- Подсказка с текстом -->
+        <div class="game-text">
+            <p>By CashGenerator</p>
+            <p>1Win-CashGen</p>
         </div>
-
-        <!-- Надпись By CashGenerator -->
-        <div class="by-cashgenerator">By CashGenerator</div>
-
-        <!-- Надпись 1WinPromo- CashGen -->
-        <div class="by-1winpromo">1Win-CashGen</div>
 
         <!-- Сетка 5x5 -->
         <div class="cells-board-wrapper">
             <div class="cells-board" id="grid">
-                <!-- 25 ячеек, заполняются через JavaScript -->
+                <!-- 25 ячеек -->
             </div>
         </div>
 
-        <!-- Управление количеством мин -->
+        <!-- Контроллер для изменения количества мин -->
         <div class="mine-control">
-            <button onclick="decreaseMines()">-</button>
+            <button class="btn" onclick="decreaseMines()">-</button>
             <span id="mineCount">3</span>
-            <button onclick="increaseMines()">+</button>
+            <button class="btn" onclick="increaseMines()">+</button>
         </div>
 
-        <!-- Кнопка запуска игры с надписью в ней -->
-        <button class="start-button" onclick="startGame()">Get Signal</button>
+        <!-- Кнопка для начала игры -->
+        <button class="start-button btn" onclick="startGame()">Get Signal</button>
 
-        <!-- Footer with Effects -->
+        <!-- Попап выигрыша -->
         <div class="mines-footer">
             <div class="mines-footer__wrapper">
                 <div class="mines-win-popup">
