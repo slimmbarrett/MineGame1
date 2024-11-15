@@ -4,212 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mine Game</title>
-    <style>
-        /* Общий стиль для всей страницы */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #0e1a2b; /* Темно-синий фон */
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Контейнер игры */
-        .game-container {
-            text-align: center;
-            background-color: #1c2a38;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
-            width: 320px;
-        }
-
-        /* Заголовок игры */
-        .header img {
-            width: 90px;
-            margin-bottom: 15px;
-        }
-
-        /* Текст "By CashGenerator" */
-        .by-cashgenerator, .by-1winpromo {
-            color: #ffffff;
-            font-size: 1.3em;
-            margin-bottom: 5px;
-            padding: 5px 10px;
-            background-color: #28a745;
-            border-radius: 4px;
-            display: inline-block;
-        }
-
-        /* Сетка 5x5 */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
-            margin-bottom: 20px;
-        }
-
-        /* Ячейки сетки */
-        .cell {
-            width: 55px;
-            height: 55px;
-            background: url('https://prod-rnd-frontend-php.100hp.app/static/media/cells-mask.1a7021b147b7851ffef6.svg') no-repeat center center;
-            background-size: cover;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            color: #ffffff;
-            border-radius: 5px;
-            transition: transform 0.2s;
-        }
-
-        /* Анимация ячейки при клике */
-        .cell:active {
-            transform: scale(0.95);
-        }
-
-        /* Мина */
-        .cell.mine {
-            background-color: #f44336;
-            color: #ffffff;
-        }
-
-        /* Безопасная ячейка */
-        .cell.safe {
-            background-color: #4caf50;
-            color: #ffffff;
-        }
-
-        /* Управление количеством мин */
-        .mine-control {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .mine-control button {
-            background-color: #3e4b58;
-            color: #ffffff;
-            border: none;
-            font-size: 18px;
-            padding: 5px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .mine-control button:hover {
-            background-color: #495a68;
-        }
-
-        .start-button {
-            background-color: #ff5722;
-            color: #ffffff;
-            font-size: 18px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .start-button:hover {
-            background-color: #e64a19;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="game-container">
-        <!-- Логотип игры -->
+    <div class="mines__bg">
+        <!-- Заголовок с изображением -->
         <div class="header">
-            <img src="https://zafeminizm.ru/wp-content/uploads/2024/05/1winmines.png" alt="MineGame Logo">
+            <img src="https://zafeminizm.ru/wp-content/uploads/2024/05/1winmines.png" alt="MineGame Logo" class="game-logo">
         </div>
 
-        <!-- Надписи -->
+        <!-- Надпись By CashGenerator -->
         <div class="by-cashgenerator">By CashGenerator</div>
+
+        <!-- Надпись 1WinPromo- CashGen -->
         <div class="by-1winpromo">1Win-CashGen</div>
 
-        <!-- Сетка -->
-        <div class="grid" id="grid">
-            <!-- Ячейки заполняются через JavaScript -->
+        <!-- Сетка 5x5 -->
+        <div class="cells-board-wrapper">
+            <div class="cells-board" id="grid">
+                <!-- 25 ячеек, заполняются через JavaScript -->
+            </div>
         </div>
 
-        <!-- Управление мин -->
+        <!-- Управление количеством мин -->
         <div class="mine-control">
             <button onclick="decreaseMines()">-</button>
             <span id="mineCount">3</span>
             <button onclick="increaseMines()">+</button>
         </div>
 
-        <!-- Кнопка запуска игры -->
+        <!-- Кнопка запуска игры с надписью в ней -->
         <button class="start-button" onclick="startGame()">Get Signal</button>
+
+        <!-- Footer with Effects -->
+        <div class="mines-footer">
+            <div class="mines-footer__wrapper">
+                <div class="mines-win-popup">
+                    <span class="win-amount">0</span>
+                    <button class="win-popup-btn big">Play Again</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script>
-        let mineCount = 3;
-        let mines = [];
-        const grid = document.getElementById("grid");
-        const mineCountDisplay = document.getElementById("mineCount");
-
-        function createGrid() {
-            grid.innerHTML = '';
-            for (let i = 0; i < 25; i++) {
-                const cell = document.createElement("div");
-                cell.classList.add("cell");
-                cell.addEventListener("click", () => revealCell(i, cell));
-                grid.appendChild(cell);
-            }
-        }
-
-        function increaseMines() {
-            if (mineCount < 24) {
-                mineCount++;
-                mineCountDisplay.textContent = mineCount;
-            }
-        }
-
-        function decreaseMines() {
-            if (mineCount > 1) {
-                mineCount--;
-                mineCountDisplay.textContent = mineCount;
-            }
-        }
-
-        function startGame() {
-            createGrid();
-            mines = generateMines();
-            alert("Мины расставлены. Найдите безопасные ячейки!");
-        }
-
-        function generateMines() {
-            const minePositions = new Set();
-            while (minePositions.size < mineCount) {
-                const randomIndex = Math.floor(Math.random() * 25);
-                minePositions.add(randomIndex);
-            }
-            return Array.from(minePositions);
-        }
-
-        function revealCell(index, cell) {
-            if (mines.includes(index)) {
-                cell.textContent = "💣";
-                cell.classList.add("mine");
-                setTimeout(() => alert("Вы попали на мину!"), 500);
-            } else {
-                cell.textContent = "⭐";
-                cell.classList.add("safe");
-                cell.removeEventListener("click", () => revealCell(index, cell));
-            }
-        }
-
-        window.onload = createGrid;
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
