@@ -5,7 +5,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #0e1a2b; /* Темно-синий фон */
+    background-color: #23274e; /* bg-darkBlue */
     color: #ffffff;
     font-family: Arial, sans-serif;
 }
@@ -13,7 +13,7 @@ body {
 /* Контейнер игры */
 .game-container {
     text-align: center;
-    background-color: #1c2a38; /* Более яркий фон */
+    background-color: #0a0d2c; /* bg-blue */
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6); /* Яркая тень */
@@ -32,7 +32,7 @@ body {
     font-size: 1.3em;
     margin-bottom: 5px;
     padding: 5px 10px; /* Подогнанный размер */
-    background-color: #28a745; /* Ярко-зеленый фон */
+    background-color: #ffbe18; /* bg-gold */
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     display: inline-block;
@@ -51,7 +51,7 @@ body {
 .cell {
     width: 55px;
     height: 55px;
-    background-color: #4c7b9f; /* Ярко-голубой цвет */
+    background-color: #24abf8; /* bg-sky */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,7 +74,7 @@ body {
 
 /* Безопасная ячейка */
 .cell.safe {
-    background-color: #008cba; /* Ярко-синий фон */
+    background-color: #0855c4; /* games-blue-bg (темно-синий) */
     color: #ffffff;
     animation: fadeInStar 0.5s forwards;
 }
@@ -96,7 +96,7 @@ body {
 
 /* Кнопки управления мин */
 .mine-control button {
-    background-color: #3e4b58;
+    background-color: #23274e; /* bg-darkBlue */
     color: #ffffff;
     font-size: 20px;
     border: none;
@@ -112,7 +112,7 @@ body {
 
 /* Кнопка начала игры */
 .start-button {
-    background-color: #ff5722; /* Ярко-оранжевый цвет */
+    background-color: #fdbb4e; /* games-orange-bg */
     color: #ffffff;
     font-size: 22px;
     border: 3px solid #fff;
