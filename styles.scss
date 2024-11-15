@@ -18,6 +18,10 @@ body {
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6); /* Яркая тень */
     width: 320px;
+    background-image: url('https://drive.google.com/uc?id=1j4dewLI7za61y7lTWBhzbDzCjQghrJFb'); /* Задний фон */
+    background-repeat: no-repeat;
+    background-size: cover;  // Масштабировать по размеру контейнера
+    background-position: center;
 }
 
 /* Логотип игры */
@@ -127,4 +131,42 @@ body {
 /* Эффект на кнопку при наведении */
 .start-button:hover {
     background-color: #e64a19; /* Темно-оранжевый на наведение */
+}
+
+/* Дополнительный стиль для фона и эффектов на сетке */
+.cells-board {
+    @apply p-[10px] grid overflow-hidden;
+    grid-template-columns: repeat(5, 66px);
+    grid-template-rows: repeat(5, 66px);
+    background-color: $default-bg-dark-blue;
+    border-radius: 25px;
+    box-shadow: 0px -2px 20px rgba(42, 49, 69, 0.4), 0px 4px 54px rgba(42, 49, 69, 0.2);
+    background-image: url('https://drive.google.com/uc?id=1vUVcG8ZUxijKdv-k0vbRugoq7wNZMz3F'); /* cellsFrame */
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center;
+}
+
+.cells-board-wrapper {
+    @apply mt-[29px] mb-[40px] relative;
+    &::after {
+        @apply -right-[140px] top-[25px] w-[82px] h-[128px] absolute;
+        content: '';
+        background-image: url('https://drive.google.com/uc?id=1BNHf6UBjInCZwVfjAFhLP_DQ5n3BK0kA'); /* Crack 1 */
+        background-size: 82px 128px;
+    }
+    &::before {
+        @apply -left-[125px] top-[140px] w-[68px] h-[201px] absolute;
+        content: '';
+        background-image: url('https://drive.google.com/uc?id=1LtEfJ3X_KG4wEe6HEj4vfGmOdDU4vsDO'); /* Cellmask */
+        background-size: 68px 201px;
+    }
+}
+
+/* Ячейка с анимацией */
+.animated-highlight {
+    @apply h-[74px] w-[610px] right-[170px] top-[50px] absolute;
+    transform: rotate(-60deg);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 98.37%, rgba(255, 255, 255, 0) 100%);
+    z-index: 3;
 }
