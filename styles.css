@@ -1,77 +1,120 @@
-/* Адаптация стилей для сетки */
-.cells-board {
-    display: grid;
-    grid-template-columns: repeat(5, 66px);
-    grid-template-rows: repeat(5, 66px);
-    gap: 10px;
-    padding: 15px;
-    background-color: #1c2a38;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
-    position: relative;
-}
-
-.cell {
+/* Основной стиль страницы */
+body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 66px;
-    height: 66px;
-    background: #4c7b9f;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
+    height: 100vh;
+    margin: 0;
+    background-color: #0e1a2b; /* Темно-синий фон */
+    color: #ffffff;
+    font-family: Arial, sans-serif;
 }
 
+/* Контейнер игры */
+.game-container {
+    text-align: center;
+    background-color: #1c2a38;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+    width: 320px;
+}
+
+/* Логотип игры */
+.header img {
+    width: 90px;
+    margin-bottom: 15px;
+}
+
+/* Тексты */
+.by-cashgenerator,
+.by-1winpromo {
+    color: #ffffff;
+    font-size: 1.3em;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background-color: #28a745;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Сетка 5x5 */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+/* Ячейки сетки */
+.cell {
+    width: 55px;
+    height: 55px;
+    background: url('https://prod-rnd-frontend-php.100hp.app/static/media/cells-mask.1a7021b147b7851ffef6.svg') no-repeat center center;
+    background-size: cover;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #ffffff;
+    border-radius: 5px;
+    transition: transform 0.2s;
+}
+
+/* Анимация ячейки при клике */
+.cell:active {
+    transform: scale(0.95);
+}
+
+/* Мина */
 .cell.mine {
     background-color: #f44336;
-    color: white;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+    color: #ffffff;
 }
 
+/* Безопасная ячейка */
 .cell.safe {
-    background-color: #008cba;
-    color: white;
-    animation: fadeInStar 0.5s forwards;
+    background-color: #4caf50;
+    color: #ffffff;
 }
 
-@keyframes fadeInStar {
-    from {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+/* Управление количеством мин */
+.mine-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-/* Маска */
-.cells-board-mask {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    mask-image: url('../../../img/mines/utils/cells-mask.svg');
-    mask-size: cover;
-    z-index: 2;
+.mine-control button {
+    background-color: #3e4b58;
+    color: #ffffff;
+    border: none;
+    font-size: 18px;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-/* Highlight */
-.animated-highlight {
-    position: absolute;
-    width: 100%;
-    height: 10%;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
-    animation: moveHighlight 2s infinite linear;
+.mine-control button:hover {
+    background-color: #495a68;
 }
 
-@keyframes moveHighlight {
-    from {
-        top: 0;
-    }
-    to {
-        top: 100%;
-    }
+/* Кнопка запуска игры */
+.start-button {
+    background-color: #ff5722;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.start-button:hover {
+    background-color: #e64a19;
 }
