@@ -18,7 +18,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6); /* Яркая тень */
     width: 320px;
-    background-image: url('https://drive.google.com/uc?export=view&id=1j4dewLI7za61y7lTWBhzbDzCjQghrJFb'); /* Задний фон */
+    background-image: url('https://drive.google.com/uc?id=1j4dewLI7za61y7lTWBhzbDzCjQghrJFb'); /* Задний фон */
     background-repeat: no-repeat;
     background-size: cover;  /* Масштабировать по размеру контейнера */
     background-position: center;
@@ -62,13 +62,26 @@ body {
     font-size: 26px;
     color: #00bcd4; /* Цвет текста */
     border-radius: 8px;
+    position: relative; /* Для абсолютного позиционирования маски */
     transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Легкая тень */
-    background-image: url('https://drive.google.com/uc?export=view&id=1LtEfJ3X_KG4wEe6HEj4vfGmOdDU4vsDO'); /* Маска для клетки */
-    background-size: contain; /* Масштабировать изображение по размеру ячейки */
+}
+
+/* Маска для ячеек */
+.cell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://drive.google.com/uc?id=1LtEfJ3X_KG4wEe6HEj4vfGmOdDU4vsDO'); /* Маска */
+    background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    z-index: 1; /* Чтобы маска была выше фона ячейки, но ниже содержимого */
+    opacity: 0; /* Маска будет скрыта по умолчанию */
+    transition: opacity 0.3s ease;
 }
 
 /* Ячейка с миной */
@@ -135,4 +148,9 @@ body {
 /* Эффект на кнопку при наведении */
 .start-button:hover {
     background-color: #e64a19; /* Темно-оранжевый на наведение */
+}
+
+/* Стили для текста внутри ячейки */
+.cell span {
+    z-index: 2; /* Чтобы текст был поверх маски */
 }
