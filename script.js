@@ -1,9 +1,9 @@
-let mineCount = 3;
+let mineCount = 3;  // Начальное количество мин
 let mines = [];
 const grid = document.getElementById("grid");
 const mineCountDisplay = document.getElementById("mineCount");
 
-// Создание сетки
+// Создание сетки 5x5
 function createGrid() {
     grid.innerHTML = ''; // Очистка сетки
     for (let i = 0; i < 25; i++) {
@@ -18,7 +18,7 @@ function createGrid() {
 function increaseMines() {
     if (mineCount < 24) {
         mineCount++;
-        mineCountDisplay.textContent = mineCount;
+        mineCountDisplay.textContent = mineCount;  // Обновление отображения мин
     }
 }
 
@@ -26,7 +26,7 @@ function increaseMines() {
 function decreaseMines() {
     if (mineCount > 1) {
         mineCount--;
-        mineCountDisplay.textContent = mineCount;
+        mineCountDisplay.textContent = mineCount;  // Обновление отображения мин
     }
 }
 
