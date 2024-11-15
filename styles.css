@@ -18,7 +18,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6); /* Яркая тень */
     width: 320px;
-    background-image: url('https://drive.google.com/uc?id=1j4dewLI7za61y7lTWBhzbDzCjQghrJFb'); /* Задний фон */
+    background-image: url('https://drive.google.com/uc?export=view&id=1j4dewLI7za61y7lTWBhzbDzCjQghrJFb'); /* Задний фон */
     background-repeat: no-repeat;
     background-size: cover;  /* Масштабировать по размеру контейнера */
     background-position: center;
@@ -65,6 +65,10 @@ body {
     transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Легкая тень */
+    background-image: url('https://drive.google.com/uc?export=view&id=1LtEfJ3X_KG4wEe6HEj4vfGmOdDU4vsDO'); /* Маска для клетки */
+    background-size: contain; /* Масштабировать изображение по размеру ячейки */
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Ячейка с миной */
@@ -131,59 +135,4 @@ body {
 /* Эффект на кнопку при наведении */
 .start-button:hover {
     background-color: #e64a19; /* Темно-оранжевый на наведение */
-}
-
-/* Дополнительный стиль для фона и эффектов на сетке */
-.cells-board {
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(5, 66px);
-    grid-template-rows: repeat(5, 66px);
-    background-color: #0e1a2b;
-    border-radius: 25px;
-    box-shadow: 0px -2px 20px rgba(42, 49, 69, 0.4), 0px 4px 54px rgba(42, 49, 69, 0.2);
-    background-image: url('https://drive.google.com/uc?id=1vUVcG8ZUxijKdv-k0vbRugoq7wNZMz3F');
-    background-repeat: no-repeat;
-    background-size: auto;
-    background-position: center;
-}
-
-.cells-board-wrapper {
-    margin-top: 29px;
-    margin-bottom: 40px;
-    position: relative;
-}
-
-.cells-board-wrapper::after {
-    content: '';
-    position: absolute;
-    right: -140px;
-    top: 25px;
-    width: 82px;
-    height: 128px;
-    background-image: url('https://drive.google.com/uc?id=1BNHf6UBjInCZwVfjAFhLP_DQ5n3BK0kA');
-    background-size: 82px 128px;
-}
-
-.cells-board-wrapper::before {
-    content: '';
-    position: absolute;
-    left: -125px;
-    top: 140px;
-    width: 68px;
-    height: 201px;
-    background-image: url('https://drive.google.com/uc?id=1LtEfJ3X_KG4wEe6HEj4vfGmOdDU4vsDO');
-    background-size: 68px 201px;
-}
-
-/* Ячейка с анимацией */
-.animated-highlight {
-    position: absolute;
-    height: 74px;
-    width: 610px;
-    right: 170px;
-    top: 50px;
-    transform: rotate(-60deg);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 98.37%, rgba(255, 255, 255, 0) 100%);
-    z-index: 3;
 }
