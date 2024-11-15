@@ -1,32 +1,40 @@
-<div class="mines__bg">
-    <!-- Контент игры -->
-    <div class="cells-board-wrapper">
-        <div class="cells-board">
-            <div class="cell">1</div>
-            <div class="cell">2</div>
-            <div class="cell">3</div>
-            <div class="cell">4</div>
-            <div class="cell">5</div>
-            <!-- другие клетки -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Заголовок с изображением -->
+        <div class="header">
+            <img src="https://zafeminizm.ru/wp-content/uploads/2024/05/1winmines.png" alt="MineGame Logo" class="game-logo">
         </div>
-        <div class="cells-board-mask">
-            <div class="animated-highlight"></div>
+
+        <!-- Надпись By CashGenerator -->
+        <div class="by-cashgenerator">By CashGenerator</div>
+
+        <!-- Надпись 1WinPromo- CashGen -->
+        <div class="by-1winpromo">1Win-CashGen</div>
+
+        <!-- Сетка 5x5 -->
+        <div class="grid" id="grid">
+            <!-- 25 ячеек, заполняются через JavaScript -->
         </div>
+
+        <!-- Управление количеством мин -->
+        <div class="mine-control">
+            <button onclick="decreaseMines()">-</button>
+            <span id="mineCount">3</span>
+            <button onclick="increaseMines()">+</button>
+        </div>
+
+        <!-- Кнопка запуска игры с надписью в ней -->
+        <button class="start-button" onclick="startGame()">Get Signal</button>
     </div>
 
-    <!-- Кнопки для игры -->
-    <div class="mines-footer__wrapper">
-        <button class="play-button bg-sky blue-text">Start Game</button>
-        <button class="count-button bg-blue lightWhite-text">Count</button>
-        <div class="bid-button-block">
-            <button class="bid-button__item bg-gold gold-text">Bid $10</button>
-            <button class="bid-button__item bg-darkBlue darkBlue-text">Bid $20</button>
-        </div>
-    </div>
-
-    <!-- Попап с выигрышем -->
-    <div class="mines-win-popup">
-        <div class="win-amount green-text">$100</div>
-        <button class="win-popup-btn big bg-gold gold-text">Cash Out</button>
-    </div>
-</div>
+    <script src="script.js"></script>
+</body>
+</html>
