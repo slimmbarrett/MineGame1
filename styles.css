@@ -1,133 +1,154 @@
-/* Подключаем стили для освещения */
-@import './bg-small-lights';
-
-/* Фон игры с радиальным градиентом */
+/* Общие стили для игры */
 .mines__bg {
     background: radial-gradient(50% 50% at 50% 50%, #151b2e 0%, rgba(21, 27, 46, 0) 100%);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-/* Игровая доска */
-.cells-board-wrapper {
-    @apply mt-[29px] mb-[40px] relative;
-    &::after {
-        @apply -right-[140px] top-[25px] w-[82px] h-[128px] absolute;
-        content: '';
-        background-image: url('../../../img/mines/crack1.svg');
-        background-size: 82px 128px;
-    }
-    &::before {
-        @apply -left-[125px] top-[140px] w-[68px] h-[201px] absolute;
-        content: '';
-        background-image: url('../../../img/mines/crack2.svg');
-        background-size: 68px 201px;
-    }
-    @screen mobile {
-        margin: 50px 0 22px;
-        &::after {
-            @include lights;
-            left: 275px;
-            top: 310px;
-            transform: scale(1, -1);
-        }
-        &::before {
-            @include lights;
-            left: -22px;
-            top: -22px;
-            transform: rotate(-0.15turn);
-        }
-    }
+.game-header {
+    margin-bottom: 20px;
+}
+
+.game-logo {
+    width: 200px;
+    height: auto;
+}
+
+/* Текстовые блоки */
+.game-text {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+/* Кнопки управления */
+.btn {
+    background-color: #ff6f61;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #e04d47;
+}
+
+.mine-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
 }
 
 /* Сетка для игры */
+.cells-board-wrapper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
 .cells-board {
-    @apply p-[10px] grid overflow-hidden;
+    display: grid;
     grid-template-columns: repeat(5, 66px);
     grid-template-rows: repeat(5, 66px);
+    gap: 5px;
     background-color: #0e1b3a;
     border-radius: 25px;
     box-shadow: 0px -2px 20px rgba(42, 49, 69, 0.4), 0px 4px 54px rgba(42, 49, 69, 0.2);
-    background-image: url('../../../img/mines/cellsFrame.png');
-    background-repeat: no-repeat;
-    background-size: auto;
-    background-position: center;
-
-    .cell {
-        @apply flex justify-center items-center;
-        z-index: 1;
-    }
+    position: relative;
+    overflow: hidden;
 }
 
-/* Эффект подсветки для ячеек */
-.cells-board-mask {
-    @apply top-[15px] left-[15px] w-[320px] h-[320px] absolute;
-    -webkit-mask-image: url('../../../img/mines/utils/cells-mask.svg');
-    -webkit-mask-size: 100% 100%;
-    -webkit-mask-clip: border-box;
-    mask-image: url('../../../img/mines/utils/cells-mask.svg');
-    mask-size: 100% 100%;
-    mask-clip: border-box;
-    z-index: 2;
-
-    .animated-highlight {
-        @apply h-[74px] w-[610px] right-[170px] top-[50px] absolute;
-        transform: rotate(-60deg);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 98.37%, rgba(255, 255, 255, 0) 100%);
-        z-index: 3;
-    }
+.cell {
+    width: 60px;
+    height: 60px;
+    background-color: #2e3b55;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    position: relative;
 }
 
-/* Стили для Footer и выигрышного попапа */
+.cell:hover {
+    background-color: #3b4a64;
+    transform: scale(1.05);
+}
+
+/* Стиль попапа с выигрышем */
 .mines-footer {
-    @apply h-[155px] tablet:h-[120px] w-full;
-    @media screen and (max-width: 425px) {
-        min-width: 421px;
-        height: 80px;
-    }
-
-    &__wrapper {
-        @apply flex justify-center h-44 absolute bottom-0 w-full;
-        align-items: flex-end;
-        z-index: -2;
-
-        &::after {
-            @apply top-[10px] tablet:top-[45px] mobile:hidden;
-            @include lights;
-            right: 3%;
-            transform: rotate(0.1turn);
-        }
-
-        &::before {
-            @apply top-[10px] tablet:top-[45px] mobile:hidden;
-            @include lights;
-            left: -0.67%;
-        }
-    }
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 155px;
+    background: #151b2e;
 }
 
-/* Стиль попапа при выигрыше */
+.mines-footer__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100%;
+}
+
 .mines-win-popup {
-    @apply flex flex-col justify-center items-center;
     background-image: url('../../../img/mines/wins.webp');
     background-repeat: no-repeat;
     background-size: 100%;
-    background-position: center;
     width: 500px;
-    @screen mobile {
-        width: 295px;
-    }
-    .win-amount {
-        @apply pt-[400px] text-[35px] text-white font-bold;
-        font-family: 'Halvar Breit XBd', sans-serif;
-        @screen mobile {
-            font-size: 22px;
-            padding-top: 280px;
-        }
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+}
 
-    .win-popup-btn {
-        &.big {
-            @apply py-[18px] px-[47px] text-[24px] mt-12 font-extrabold uppercase mobile:mt-9;
-            width: fit-content;
-        }
-    }
+.win-amount {
+    font-size: 35px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.win-popup-btn {
+    font-size: 24px;
+    padding: 10px 20px;
+    background-color: #ff6f61;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.win-popup-btn:hover {
+    background-color: #e04d47;
+}
+
+.start-button {
+    background-color: #ff6f61;
+    color: white;
+    font-size: 24px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.start-button:hover {
+    background-color: #e04d47;
 }
