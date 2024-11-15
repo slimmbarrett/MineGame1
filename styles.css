@@ -22,7 +22,7 @@
         z-index: 5;
       }
       @screen mobile {
-        @apply gap-2.5 flex-nowrap p-0;
+        gap: 2.5rem; /* Применение новых значений для мобильных устройств */
         .progress-icon {
           svg {
             width: 100%;
@@ -38,7 +38,7 @@
     column-gap: 5rem;
     background: radial-gradient(
       50% 50% at 50% 50%,
-      #151b2e 0%, /* Используем bg-darkBlue */
+      #23274e 0%, /* bg-darkBlue */
       rgba(21, 27, 46, 0) 100%
     );
     @screen mobile {
@@ -61,7 +61,7 @@
         line-height: 28px;
         text-align: center;
         text-transform: uppercase;
-        color: #f3f3f3; /* Сохраняем этот цвет для текста */
+        color: #f3f3f3;
       }
       p {
         font-family: 'Halvar Breit XBd', sans-serif;
@@ -70,7 +70,7 @@
         font-size: 16px;
         line-height: 19px;
         text-transform: uppercase;
-        color: #666d85; /* Сохраняем этот цвет для текста */
+        color: #666d85;
         @screen mobile {
           width: 100%;
           text-align: center;
