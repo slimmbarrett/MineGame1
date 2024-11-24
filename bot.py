@@ -11,7 +11,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Константы
-BOT_TOKEN = '7537994303:AAG15uJYwAmzVINLchNmzIjZ7So95RdkpdI'
+BOT_TOKEN = '8115585479:AAH8qgvFN-KX1G08DCFUfEb0jVykVEn2SE4'
 CHANNEL_ID = 'cashgeneratorUBT'
 CHANNEL_URL = f"https://t.me/{CHANNEL_ID}"
 WIN_URL = "https://1wxxlb.com/casino/list?open=register&p=dsgq"
@@ -114,50 +114,62 @@ async def check_subscription(bot, user_id: int) -> bool:
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик команды /start"""
     try:
-        user = update.effective_user
-        logger.debug(f"Start command received from user {user.id}")
-        
         # Отправляем клавиатуру выбора языка
         await update.message.reply_text(
             "👋 Choose your language / Выберите язык:",
             reply_markup=get_language_keyboard()
         )
     except Exception as e:
-        logger.error(f"Error in start command: {e}", exc_info=True)
+        logger.error(f"Error in start command: {str(e)}")
+        # Пытаемся отправить сообщение еще раз в случае ошибки
+        try:
+            await context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text="👋 Choose your language / Выберите язык:",
+                reply_markup=get_language_keyboard()
+            )
+        except Exception as retry_error:
+            logger.error(f"Failed to send message on retry: {str(retry_error)}")
 
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик нажатий на кнопки"""
     try:
         query = update.callback_query
+        await query.answer()  # Сразу отвечаем на callback query
+        
         user_id = query.from_user.id
         logger.debug(f"Button callback from user {user_id}: {query.data}")
         
         if query.data.startswith('lang_'):
-            # Обработка выбора языка
             lang = query.data.split('_')[1]
             user_language[user_id] = lang
             welcome_text = messages[lang]['welcome'].replace('[USERNAME]', query.from_user.first_name)
-            await query.edit_message_text(text=welcome_text, reply_markup=get_subscription_keyboard(lang))
-            logger.debug(f"Language set to {lang} for user {user_id}")
+            await query.edit_message_text(
+                text=welcome_text,
+                reply_markup=get_subscription_keyboard(lang)
+            )
             
         elif query.data == 'check_sub':
-            # Проверка подписки
             lang = user_language.get(user_id, 'en')
-            logger.debug(f"Checking subscription for user {user_id} with language {lang}")
-            
             is_subscribed = await check_subscription(context.bot, user_id)
-            logger.debug(f"Subscription check result: {is_subscribed}")
             
             if is_subscribed:
-                logger.debug("User is subscribed, sending game keyboard")
-                await query.edit_message_text(text=messages[lang]['ref_link'], reply_markup=get_game_keyboard())
-                await context.bot.send_message(chat_id=user_id, text=messages[lang]['final_message'])
+                await query.edit_message_text(
+                    text=messages[lang]['ref_link'],
+                    reply_markup=get_game_keyboard()
+                )
+                await context.bot.send_message(
+                    chat_id=user_id,
+                    text=messages[lang]['final_message']
+                )
             else:
-                logger.debug("User is not subscribed, showing alert")
-                await query.answer(messages[lang]['not_subscribed'], show_alert=True)
+                await query.answer(
+                    messages[lang]['not_subscribed'],
+                    show_alert=True
+                )
                 
     except Exception as e:
-        logger.error(f"Error in button callback: {str(e)}", exc_info=True)
+        logger.error(f"Error in button callback: {str(e)}")
         try:
             await query.answer("An error occurred. Please try again.", show_alert=True)
         except:
