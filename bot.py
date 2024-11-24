@@ -1,40 +1,224 @@
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, WebAppInfo
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
+import logging
+from typing import Dict
+import os
 
-# Вставьте ваш токен сюда
+# Настройка логирования
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.DEBUG
+)
+logger = logging.getLogger(__name__)
+
+# Константы
 BOT_TOKEN = '7537994303:AAG15uJYwAmzVINLchNmzIjZ7So95RdkpdI'
+CHANNEL_ID = 'cashgeneratorUBT'
+CHANNEL_URL = f"https://t.me/{CHANNEL_ID}"
+WIN_URL = "https://1wxxlb.com/casino/list?open=register&p=dsgq"
+WEB_APP_URL = 'https://mine1win.vercel.app/'
+VIDEO_URL = 'https://raw.githubusercontent.com/slimmbarrett/MineGame1/main/%D0%A1ASH%20LOGO.mp4'
 
-# URL вашего Web App
-WEB_APP_URL = 'https://mine-game1.vercel.app/'
+# Путь к видеофайлу
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+VIDEO_PATH = os.path.join(CURRENT_DIR, 'CASH LOGO.mp4')
 
-def start(update: Update, context: CallbackContext) -> None:
-    # Кнопка с веб-приложением
+# Проверяем наличие видео при запуске
+if os.path.exists(VIDEO_PATH):
+    logger.info(f"Video file found at: {VIDEO_PATH}")
+    logger.info(f"Video file size: {os.path.getsize(VIDEO_PATH)} bytes")
+else:
+    logger.error(f"Video file not found at: {VIDEO_PATH}")
+    logger.info(f"Current directory contents: {os.listdir(CURRENT_DIR)}")
+
+# Словарь для хранения языка пользователей
+user_language: Dict[int, str] = {}
+
+# Многоязычные сообщения
+messages = {
+    'en': {
+        'welcome': "Hello [USERNAME]!\n🚩You must subscribe to our Telegram channel to continue!\n\n🔔 This will help you not miss any important signals! 🚀",
+        'check_subscription': "Check subscription!",
+        'channel': "Channel",
+        'not_subscribed': "Please subscribe to our channel to continue!",
+        'ref_link': "🎉 Here's the referral link to our partner! 🎉\n\n🚨 Important warning!🚨\n\nIf you don't register using this link, the bot may show incorrect results! ⚠️\n\nDON'T FORGET TO USE PROMO CODE - CashGen 💸",
+        'final_message': "🚀 MineGames from Cash Generator — your chance to test your luck! 💰\n\nWith our bot you'll get 92% pass rate in MINE game! 🎯 Enjoy the game without extra risk and win! 🎉\n\nDon't miss your chance — start right now! 💥\n\nCLICK THE 'Mine 92%✅' BUTTON"
+    },
+    'ru': {
+        'welcome': "Привет [USERNAME]!\n🚩Обязательно подпишитесь на наш Telegram-канал, чтобы продолжить!\n\n🔔 Это поможет не пропустить ни одного важного сигнала! 🚀",
+        'check_subscription': "Проверка подписки!",
+        'channel': "Канал",
+        'not_subscribed': "Пожалуйста, подпишитесь на наш канал, чтобы продолжить!",
+        'ref_link': "🎉 Вот реферальная ссылка на нашего партнера! 🎉\n\n🚨 Важное предупреждение!🚨\n\nЕсли вы не зарегистрируетесь по этой ссылке, бот может показывать неверные результаты! ⚠️\n\nНЕ ЗАБУДЬ УКАЗАТЬ ПРОМОКОД - CashGen 💸",
+        'final_message': "🚀 MineGames от Генератора Кэша — ваш шанс испытать удачу! 💰\n\nС нашим ботом вы получите 92% проходимость в игре MINE! 🎯 Наслаждайтесь игрой без лишнего риска и выигрывайте! 🎉\n\nНе упустите шанс — начните прямо сейчас! 💥\n\nНАЖМИ НА КНОПКУ 'Mine 92%✅'"
+    },
+    'hi': {
+        'welcome': "नमस्ते [USERNAME]!\n🚩जारी रखने के लिए हमारे टेलीग्राम चैनल को सब्सक्राइब करें!\n\n🔔 यह आपको कोई महत्वपूर्ण सिग्नल न छूटने में मदद करेगा! 🚀",
+        'check_subscription': "सदस्यता की जाँच करें!",
+        'channel': "चैनल",
+        'not_subscribed': "जारी रखने के लिए कृपया हमारे चैनल को सब्सक्राइब करें!",
+        'ref_link': "🎉 यहाँ हमारे पार्टनर का रेफरल लिंक है! 🎉\n\n🚨 महत्वपूर्ण चेतावनी!🚨\n\nअगर आप इस लिंक से रजिस्टर नहीं करते हैं, तो बॉट गलत परिणाम दिखा सकता है! ⚠️\n\nप्रोमो कोड भूलें नहीं - CashGen 💸",
+        'final_message': "🚀 कैश जेनरेटर से MineGames — आपका भाग्य आजमाने का मौका! 💰\n\nहमारे बॉट के साथ आपको MINE गेम में 92% पास रेट मिलेगा! 🎯 बिना अतिरिक्त जोखिम के गेम का आनंद लें और जीतें! 🎉\n\nमौका न छोड़ें — अभी शुरू करें! 💥\n\n'Mine 92%✅' बटन पर क्लिक करें"
+    },
+    'pt': {
+        'welcome': "Olá [USERNAME]!\n🚩Você deve se inscrever em nosso canal do Telegram para continuar!\n\n🔔 Isso ajudará você a não perder nenhum sinal importante! 🚀",
+        'check_subscription': "Verificar inscrição!",
+        'channel': "Canal",
+        'not_subscribed': "Por favor, inscreva-se em nosso canal para continuar!",
+        'ref_link': "🎉 Aqui está o link de referência para nosso parceiro! 🎉\n\n🚨 Aviso importante!🚨\n\nSe você não se registrar usando este link, o bot pode mostrar resultados incorretos! ⚠️\n\nNÃO ESQUEÇA DE USAR O CÓDIGO PROMOCIONAL - CashGen 💸",
+        'final_message': "🚀 MineGames do Gerador de Dinheiro — sua chance de testar sua sorte! 💰\n\nCom nosso bot você terá 92% de taxa de aprovação no jogo MINE! 🎯 Aproveite o jogo sem risco extra e ganhe! 🎉\n\nNão perca sua chance — comece agora! 💥\n\nCLIQUE NO BOTÃO 'Mine 92%✅'"
+    }
+}
+
+def get_language_keyboard() -> InlineKeyboardMarkup:
+    """Создает клавиатуру выбора языка"""
     keyboard = [
-        [InlineKeyboardButton("Начать игру", web_app={"url": WEB_APP_URL})]
+        [
+            InlineKeyboardButton("English 🇬🇧", callback_data='lang_en'),
+            InlineKeyboardButton("Русский 🇷🇺", callback_data='lang_ru')
+        ],
+        [
+            InlineKeyboardButton("हिंदी 🇮🇳", callback_data='lang_hi'),
+            InlineKeyboardButton("Português 🇵🇹", callback_data='lang_pt')
+        ]
     ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    return InlineKeyboardMarkup(keyboard)
 
-    # Отправляем приветственное сообщение с кнопкой
-    update.message.reply_text(
-        'Добро пожаловать в MineGames! Нажмите кнопку, чтобы начать игру.',
-        reply_markup=reply_markup
-    )
+def get_subscription_keyboard(lang: str) -> InlineKeyboardMarkup:
+    """Создает клавиатуру для проверки подписки"""
+    keyboard = [
+        [
+            InlineKeyboardButton(messages[lang]['channel'], url=CHANNEL_URL),
+            InlineKeyboardButton(messages[lang]['check_subscription'], callback_data='check_sub')
+        ]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def get_game_keyboard() -> InlineKeyboardMarkup:
+    """Создает клавиатуру для игры"""
+    keyboard = [
+        [
+            InlineKeyboardButton("1WIN", url=WIN_URL),
+            InlineKeyboardButton("Mine 92%✅", web_app=WebAppInfo(url=WEB_APP_URL))
+        ]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+async def check_subscription(bot, user_id: int) -> bool:
+    """Проверяет подписку пользователя на канал"""
+    try:
+        logger.debug(f"Checking subscription for user {user_id}")
+        logger.debug(f"Channel ID: @{CHANNEL_ID}")
+        
+        member = await bot.get_chat_member(chat_id=f"@{CHANNEL_ID}", user_id=user_id)
+        logger.debug(f"Member status: {member.status}")
+        
+        # Расширяем список допустимых статусов
+        allowed_statuses = ['member', 'administrator', 'creator', 'restricted']
+        is_subscribed = member.status in allowed_statuses
+        
+        logger.debug(f"Is subscribed: {is_subscribed}")
+        return is_subscribed
+        
+    except Exception as e:
+        logger.error(f"Error checking subscription: {str(e)}", exc_info=True)
+        # В случае ошибки считаем, что пользователь подписан
+        return True
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик команды /start"""
+    try:
+        user = update.effective_user
+        logger.debug(f"Start command received from user {user.id}")
+        
+        try:
+            # Отправляем видео по URL и сообщение с клавиатурой
+            logger.debug("Attempting to send video...")
+            await context.bot.send_video(
+                chat_id=update.effective_chat.id,
+                video=VIDEO_URL,
+                caption="👋 Choose your language / Выберите язык:",
+                reply_markup=get_language_keyboard()
+            )
+            logger.debug(f"Video and language keyboard sent to user {user.id}")
+        except Exception as video_error:
+            logger.error(f"Error sending video: {str(video_error)}", exc_info=True)
+            # Если не удалось отправить видео, отправляем только сообщение
+            await update.message.reply_text(
+                "👋 Choose your language / Выберите язык:",
+                reply_markup=get_language_keyboard()
+            )
+            
+    except Exception as e:
+        logger.error(f"Error in start command: {str(e)}", exc_info=True)
+        await update.message.reply_text(
+            "👋 Choose your language / Выберите язык:",
+            reply_markup=get_language_keyboard()
+        )
+
+async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик нажатий на кнопки"""
+    try:
+        query = update.callback_query
+        user_id = query.from_user.id
+        logger.debug(f"Button callback from user {user_id}: {query.data}")
+        
+        if query.data.startswith('lang_'):
+            # Обработка выбора языка
+            lang = query.data.split('_')[1]
+            user_language[user_id] = lang
+            welcome_text = messages[lang]['welcome'].replace('[USERNAME]', query.from_user.first_name)
+            await query.edit_message_text(text=welcome_text, reply_markup=get_subscription_keyboard(lang))
+            logger.debug(f"Language set to {lang} for user {user_id}")
+            
+        elif query.data == 'check_sub':
+            # Проверка подписки
+            lang = user_language.get(user_id, 'en')
+            logger.debug(f"Checking subscription for user {user_id} with language {lang}")
+            
+            is_subscribed = await check_subscription(context.bot, user_id)
+            logger.debug(f"Subscription check result: {is_subscribed}")
+            
+            if is_subscribed:
+                logger.debug("User is subscribed, sending game keyboard")
+                await query.edit_message_text(text=messages[lang]['ref_link'], reply_markup=get_game_keyboard())
+                await context.bot.send_message(chat_id=user_id, text=messages[lang]['final_message'])
+            else:
+                logger.debug("User is not subscribed, showing alert")
+                await query.answer(messages[lang]['not_subscribed'], show_alert=True)
+                
+    except Exception as e:
+        logger.error(f"Error in button callback: {str(e)}", exc_info=True)
+        try:
+            await query.answer("An error occurred. Please try again.", show_alert=True)
+        except:
+            pass
+
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик всех текстовых сообщений"""
+    try:
+        user_id = update.effective_user.id
+        logger.debug(f"Received message from user {user_id}: {update.message.text}")
+    except Exception as e:
+        logger.error(f"Error handling message: {e}", exc_info=True)
 
 def main() -> None:
-    # Создаем экземпляр бота и передаем токен
-    updater = Updater(BOT_TOKEN)
+    """Запуск бота"""
+    try:
+        # Создаем приложение
+        application = Application.builder().token(BOT_TOKEN).build()
 
-    # Получаем диспетчера для регистрации обработчиков
-    dispatcher = updater.dispatcher
+        # Добавляем обработчики
+        application.add_handler(CommandHandler("start", start))
+        application.add_handler(CallbackQueryHandler(button_callback))
+        application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-    # Обрабатываем команду /start
-    dispatcher.add_handler(CommandHandler('start', start))
-
-    # Запускаем бота
-    updater.start_polling()
-
-    # Ожидаем завершения
-    updater.idle()
+        # Запускаем бота
+        logger.info("Starting bot...")
+        application.run_polling(drop_pending_updates=True)
+        
+    except Exception as e:
+        logger.error(f"Critical error: {e}", exc_info=True)
 
 if __name__ == '__main__':
     main()
