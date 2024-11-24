@@ -11,7 +11,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Константы
-BOT_TOKEN = '7537994303:AAG15uJYwAmzVINLchNmzIjZ7So95RdkpdI'
+BOT_TOKEN = '8115585479:AAH8qgvFN-KX1G08DCFUfEb0jVykVEn2SE4'
 CHANNEL_ID = 'cashgeneratorUBT'
 CHANNEL_URL = f"https://t.me/{CHANNEL_ID}"
 WIN_URL = "https://1wxxlb.com/casino/list?open=register&p=dsgq"
@@ -93,72 +93,52 @@ def get_game_keyboard() -> InlineKeyboardMarkup:
 async def check_subscription(bot, user_id: int) -> bool:
     """Проверяет подписку пользователя на канал"""
     try:
-        logger.debug(f"Checking subscription for user {user_id}")
         member = await bot.get_chat_member(chat_id=f"@{CHANNEL_ID}", user_id=user_id)
-        logger.debug(f"Member status: {member.status}")
-        return member.status in ['member', 'administrator', 'creator', 'restricted']
+        return member.status in ['member', 'administrator', 'creator']
     except Exception as e:
-        logger.error(f"Error checking subscription: {str(e)}")
+        logger.error(f"Error checking subscription: {e}")
         return False
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик команды /start"""
     try:
         user = update.effective_user
-        logger.info(f"Start command received from user {user.id}")
+        logger.debug(f"Start command received from user {user.id}")
         
         # Отправляем клавиатуру выбора языка
         await update.message.reply_text(
             "👋 Choose your language / Выберите язык:",
             reply_markup=get_language_keyboard()
         )
-        logger.info(f"Language keyboard sent to user {user.id}")
-        
     except Exception as e:
-        logger.error(f"Error in start command: {str(e)}")
-        try:
-            await context.bot.send_message(
-                chat_id=update.effective_chat.id,
-                text="An error occurred. Please try /start again."
-            )
-        except Exception as retry_error:
-            logger.error(f"Failed to send error message: {str(retry_error)}")
+        logger.error(f"Error in start command: {e}", exc_info=True)
 
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик нажатий на кнопки"""
     try:
         query = update.callback_query
-        await query.answer()  # Сразу отвечаем на callback query
-        
         user_id = query.from_user.id
-        logger.info(f"Button callback from user {user_id}: {query.data}")
         
         if query.data.startswith('lang_'):
+            # Обработка выбора языка
             lang = query.data.split('_')[1]
             user_language[user_id] = lang
             welcome_text = messages[lang]['welcome'].replace('[USERNAME]', query.from_user.first_name)
             await query.edit_message_text(text=welcome_text, reply_markup=get_subscription_keyboard(lang))
-            logger.info(f"Language {lang} set for user {user_id}")
             
         elif query.data == 'check_sub':
+            # Проверка подписки
             lang = user_language.get(user_id, 'en')
             is_subscribed = await check_subscription(context.bot, user_id)
-            logger.info(f"Subscription check for user {user_id}: {is_subscribed}")
             
             if is_subscribed:
                 await query.edit_message_text(text=messages[lang]['ref_link'], reply_markup=get_game_keyboard())
                 await context.bot.send_message(chat_id=user_id, text=messages[lang]['final_message'])
-                logger.info(f"Game keyboard sent to user {user_id}")
             else:
                 await query.answer(messages[lang]['not_subscribed'], show_alert=True)
-                logger.info(f"Subscription check failed for user {user_id}")
                 
     except Exception as e:
-        logger.error(f"Error in button callback: {str(e)}")
-        try:
-            await query.answer("An error occurred. Please try again.", show_alert=True)
-        except:
-            pass
+        logger.error(f"Error in button callback: {e}", exc_info=True)
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик всех текстовых сообщений"""
@@ -166,28 +146,25 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         user_id = update.effective_user.id
         logger.debug(f"Received message from user {user_id}: {update.message.text}")
     except Exception as e:
-        logger.error(f"Error handling message: {str(e)}")
+        logger.error(f"Error handling message: {e}", exc_info=True)
 
 def main() -> None:
     """Запуск бота"""
     try:
         # Создаем приложение
-        logger.info("Starting bot application...")
         application = Application.builder().token(BOT_TOKEN).build()
 
         # Добавляем обработчики
-        logger.info("Adding handlers...")
         application.add_handler(CommandHandler("start", start))
         application.add_handler(CallbackQueryHandler(button_callback))
         application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
         # Запускаем бота
-        logger.info("Starting bot polling...")
+        logger.info("Starting bot...")
         application.run_polling(drop_pending_updates=True)
         
     except Exception as e:
-        logger.error(f"Critical error: {str(e)}")
-        raise
+        logger.error(f"Critical error: {e}", exc_info=True)
 
 if __name__ == '__main__':
     main()
