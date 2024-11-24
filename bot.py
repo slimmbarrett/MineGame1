@@ -114,22 +114,30 @@ async def check_subscription(bot, user_id: int) -> bool:
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик команды /start"""
     try:
-        # Отправляем клавиатуру выбора языка
-        await update.message.reply_text(
-            "👋 Choose your language / Выберите язык:",
-            reply_markup=get_language_keyboard()
+        user = update.effective_user
+        chat_id = update.effective_chat.id
+        logger.info(f"Start command received from user {user.id} in chat {chat_id}")
+        
+        keyboard = get_language_keyboard()
+        logger.debug("Language keyboard created")
+        
+        message = await context.bot.send_message(
+            chat_id=chat_id,
+            text="👋 Choose your language / Выберите язык:",
+            reply_markup=keyboard
         )
+        logger.info(f"Start message sent successfully to chat {chat_id}")
+        
     except Exception as e:
-        logger.error(f"Error in start command: {str(e)}")
-        # Пытаемся отправить сообщение еще раз в случае ошибки
-        try:
-            await context.bot.send_message(
-                chat_id=update.effective_chat.id,
-                text="👋 Choose your language / Выберите язык:",
-                reply_markup=get_language_keyboard()
-            )
-        except Exception as retry_error:
-            logger.error(f"Failed to send message on retry: {str(retry_error)}")
+        logger.error(f"Error in start command: {str(e)}", exc_info=True)
+        if update and update.effective_chat:
+            try:
+                await context.bot.send_message(
+                    chat_id=update.effective_chat.id,
+                    text="An error occurred. Please try /start again."
+                )
+            except Exception as retry_error:
+                logger.error(f"Failed to send error message: {str(retry_error)}", exc_info=True)
 
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик нажатий на кнопки"""
