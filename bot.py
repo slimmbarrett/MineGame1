@@ -2,39 +2,22 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, WebAppI
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
 import logging
 from typing import Dict
-import os
 
-# Настройка логирования
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.DEBUG
 )
 logger = logging.getLogger(__name__)
 
-# Константы
-BOT_TOKEN = '7537994303:AAG15uJYwAmzVINLchNmzIjZ7So95RdkpdI'
+BOT_TOKEN = '8115585479:AAH8qgvFN-KX1G08DCFUfEb0jVykVEn2SE4'
 CHANNEL_ID = 'cashgeneratorUBT'
 CHANNEL_URL = f"https://t.me/{CHANNEL_ID}"
 WIN_URL = "https://1wxxlb.com/casino/list?open=register&p=dsgq"
 WEB_APP_URL = 'https://mine1win.vercel.app/'
 VIDEO_URL = 'https://raw.githubusercontent.com/slimmbarrett/MineGame1/main/%D0%A1ASH%20LOGO.mp4'
 
-# Путь к видеофайлу
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-VIDEO_PATH = os.path.join(CURRENT_DIR, 'CASH LOGO.mp4')
-
-# Проверяем наличие видео при запуске
-if os.path.exists(VIDEO_PATH):
-    logger.info(f"Video file found at: {VIDEO_PATH}")
-    logger.info(f"Video file size: {os.path.getsize(VIDEO_PATH)} bytes")
-else:
-    logger.error(f"Video file not found at: {VIDEO_PATH}")
-    logger.info(f"Current directory contents: {os.listdir(CURRENT_DIR)}")
-
-# Словарь для хранения языка пользователей
 user_language: Dict[int, str] = {}
 
-# Многоязычные сообщения
 messages = {
     'en': {
         'welcome': "Hello [USERNAME]!\n🚩You must subscribe to our Telegram channel to continue!\n\n🔔 This will help you not miss any important signals! 🚀",
@@ -71,7 +54,6 @@ messages = {
 }
 
 def get_language_keyboard() -> InlineKeyboardMarkup:
-    """Создает клавиатуру выбора языка"""
     keyboard = [
         [
             InlineKeyboardButton("English 🇬🇧", callback_data='lang_en'),
@@ -85,7 +67,6 @@ def get_language_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(keyboard)
 
 def get_subscription_keyboard(lang: str) -> InlineKeyboardMarkup:
-    """Создает клавиатуру для проверки подписки"""
     keyboard = [
         [
             InlineKeyboardButton(messages[lang]['channel'], url=CHANNEL_URL),
@@ -95,7 +76,6 @@ def get_subscription_keyboard(lang: str) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(keyboard)
 
 def get_game_keyboard() -> InlineKeyboardMarkup:
-    """Создает клавиатуру для игры"""
     keyboard = [
         [
             InlineKeyboardButton("1WIN", url=WIN_URL),
@@ -105,120 +85,84 @@ def get_game_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(keyboard)
 
 async def check_subscription(bot, user_id: int) -> bool:
-    """Проверяет подписку пользователя на канал"""
     try:
         logger.debug(f"Checking subscription for user {user_id}")
-        logger.debug(f"Channel ID: @{CHANNEL_ID}")
-        
         member = await bot.get_chat_member(chat_id=f"@{CHANNEL_ID}", user_id=user_id)
         logger.debug(f"Member status: {member.status}")
-        
-        # Расширяем список допустимых статусов
-        allowed_statuses = ['member', 'administrator', 'creator', 'restricted']
-        is_subscribed = member.status in allowed_statuses
-        
-        logger.debug(f"Is subscribed: {is_subscribed}")
-        return is_subscribed
-        
+        return member.status in ['member', 'administrator', 'creator', 'restricted']
     except Exception as e:
-        logger.error(f"Error checking subscription: {str(e)}", exc_info=True)
-        # В случае ошибки считаем, что пользователь подписан
-        return True
+        logger.error(f"Error checking subscription: {e}")
+        return False
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Обработчик команды /start"""
     try:
         user = update.effective_user
         logger.debug(f"Start command received from user {user.id}")
         
         try:
-            # Отправляем видео по URL и сообщение с клавиатурой
-            logger.debug("Attempting to send video...")
             await context.bot.send_video(
                 chat_id=update.effective_chat.id,
                 video=VIDEO_URL,
                 caption="👋 Choose your language / Выберите язык:",
                 reply_markup=get_language_keyboard()
             )
-            logger.debug(f"Video and language keyboard sent to user {user.id}")
         except Exception as video_error:
-            logger.error(f"Error sending video: {str(video_error)}", exc_info=True)
-            # Если не удалось отправить видео, отправляем только сообщение
+            logger.error(f"Error sending video: {video_error}")
             await update.message.reply_text(
                 "👋 Choose your language / Выберите язык:",
                 reply_markup=get_language_keyboard()
             )
-            
     except Exception as e:
-        logger.error(f"Error in start command: {str(e)}", exc_info=True)
+        logger.error(f"Error in start command: {e}")
         await update.message.reply_text(
             "👋 Choose your language / Выберите язык:",
             reply_markup=get_language_keyboard()
         )
 
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Обработчик нажатий на кнопки"""
     try:
         query = update.callback_query
         user_id = query.from_user.id
-        logger.debug(f"Button callback from user {user_id}: {query.data}")
         
         if query.data.startswith('lang_'):
-            # Обработка выбора языка
             lang = query.data.split('_')[1]
             user_language[user_id] = lang
             welcome_text = messages[lang]['welcome'].replace('[USERNAME]', query.from_user.first_name)
             await query.edit_message_text(text=welcome_text, reply_markup=get_subscription_keyboard(lang))
-            logger.debug(f"Language set to {lang} for user {user_id}")
             
         elif query.data == 'check_sub':
-            # Проверка подписки
             lang = user_language.get(user_id, 'en')
-            logger.debug(f"Checking subscription for user {user_id} with language {lang}")
-            
             is_subscribed = await check_subscription(context.bot, user_id)
-            logger.debug(f"Subscription check result: {is_subscribed}")
             
             if is_subscribed:
-                logger.debug("User is subscribed, sending game keyboard")
                 await query.edit_message_text(text=messages[lang]['ref_link'], reply_markup=get_game_keyboard())
                 await context.bot.send_message(chat_id=user_id, text=messages[lang]['final_message'])
             else:
-                logger.debug("User is not subscribed, showing alert")
                 await query.answer(messages[lang]['not_subscribed'], show_alert=True)
                 
     except Exception as e:
-        logger.error(f"Error in button callback: {str(e)}", exc_info=True)
-        try:
-            await query.answer("An error occurred. Please try again.", show_alert=True)
-        except:
-            pass
+        logger.error(f"Error in button callback: {e}")
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Обработчик всех текстовых сообщений"""
     try:
         user_id = update.effective_user.id
         logger.debug(f"Received message from user {user_id}: {update.message.text}")
     except Exception as e:
-        logger.error(f"Error handling message: {e}", exc_info=True)
+        logger.error(f"Error handling message: {e}")
 
 def main() -> None:
-    """Запуск бота"""
     try:
-        # Создаем приложение
         application = Application.builder().token(BOT_TOKEN).build()
-
-        # Добавляем обработчики
+        
         application.add_handler(CommandHandler("start", start))
         application.add_handler(CallbackQueryHandler(button_callback))
         application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-
-        # Запускаем бота
+        
         logger.info("Starting bot...")
         application.run_polling(drop_pending_updates=True)
         
     except Exception as e:
-        logger.error(f"Critical error: {e}", exc_info=True)
+        logger.error(f"Critical error: {e}")
 
 if __name__ == '__main__':
     main()
