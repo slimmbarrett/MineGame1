@@ -14,7 +14,7 @@ CHANNEL_ID = 'cashgeneratorUBT'
 CHANNEL_URL = f"https://t.me/{CHANNEL_ID}"
 WIN_URL = "https://1wxxlb.com/casino/list?open=register&p=dsgq"
 WEB_APP_URL = 'https://mine1win.vercel.app/'
-VIDEO_URL = 'https://raw.githubusercontent.com/slimmbarrett/MineGame1/main/%D0%A1ASH%20LOGO.mp4'
+VIDEO_URL = 'https://github.com/slimmbarrett/MineGame1/raw/main/CASH%20LOGO.mp4'
 
 user_language: Dict[int, str] = {}
 
